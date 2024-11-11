@@ -1,10 +1,6 @@
 import React from 'react';
-import Input from '../../../Components/Input.jsx'
-import Table from '../Components/Table.jsx';
-import Boton from '../../../Components/Buton.jsx';
-import Sidebar from '../Containers/Sidebar.jsx';
-import Header from '../Containers/Header.jsx';
-import './App.css'
+import AppLayout from '../Containers/Layout.jsx';
+
 
 class Index extends React.Component {
   constructor(props){
@@ -17,28 +13,15 @@ class Index extends React.Component {
         { nombre: "María Ruiz", email: "maria.ruiz@gmail.com", rol: "Cliente" }
     ]}
   }
+
+  onclick=()=>{
+    console.log('click')
+  }
   render(){
     return (
       <div className="App">
-        <div className="users-container">
-          <Sidebar></Sidebar>
-        <main className="main-content">
-          <header className="header">
-            <Input fondo="Buscar"></Input>
-            <span>Bienvenido, Administrador</span>
-          </header>
-          <div className="user-management">
-            <Header></Header>
-            <div className='user-create'>
-              <Boton texto="Crear" estilo="aceptar"></Boton>
-            </div>
-            
-            <Table usuarios={this.state.usuarios}></Table>
+        <AppLayout/>
           </div>
-        </main>
-    </div>
-
-      </div>
     );
   }
   

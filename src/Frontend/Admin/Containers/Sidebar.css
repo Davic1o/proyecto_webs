@@ -1,9 +1,27 @@
+
+  /* Sidebar.css */
 .sidebar {
-    width: 200px;
-    background-color: #99BEF5E6;
-    padding-top: 100px;
-    padding-left: 25px;
-    display: flex;
-    flex-direction: column;
-    height: 87%;
-  }
+  position: fixed;
+  top: 10vh;                 /* Alinea el menú con la parte superior de la pantalla */
+  left: 0;                /* Fija el menú a la izquierda de la pantalla */
+  width: 200px;           /* Ancho del menú */
+  height: 90vh;          /* Ocupa toda la altura de la ventana */
+  background-color: #99BEF5E6;
+  padding-top: 20px;      /* Espacio superior */
+  display: flex;
+  flex-direction: column; 
+  gap: 15px;              /* Espacio entre enlaces */
+}
+
+.sidebar a {
+  color: rgb(12, 12, 164);           /* Color del texto */
+  text-decoration: none;  /* Sin subrayado */
+  padding: 10px 15px;     /* Espacio alrededor del texto */
+  display: block;         /* Los enlaces ocupan todo el ancho */
+  transition: background-color 0.3s; /* Efecto de transición */
+}
+
+.sidebar a:hover {
+  background-color: #c9c7c7; /* Cambio de color en hover */
+  cursor: pointer;
+}
