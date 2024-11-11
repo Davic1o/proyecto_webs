@@ -1,5 +1,6 @@
 import React from 'react';
 import AppLayout from '../Containers/Layout.jsx';
+import Table from '../Components/Table.jsx';
 
 
 class Index extends React.Component {
@@ -18,9 +19,12 @@ class Index extends React.Component {
     console.log('click')
   }
   render(){
+    const { usuarios } = this.state; 
     return (
       <div className="App">
-        <AppLayout/>
+        <AppLayout>
+        <Table usuarios={usuarios} />
+        </AppLayout>
           </div>
     );
   }
