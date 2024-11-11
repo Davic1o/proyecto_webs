@@ -1,0 +1,15 @@
+.tabla_users {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: aliceblue;
+  }
+  
+  .tabla_users th, .tabla_users td {
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: left;
+  }
+  .tabla_users th{
+    background-color: #ccc;
+  }

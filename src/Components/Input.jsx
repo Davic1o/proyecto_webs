@@ -1,7 +1,19 @@
 import React from 'react'
 
-export default function Input() {
-  return (
-    <div>Input</div>
-  )
+class Input extends Component{
+  render(){
+      const {fondo, tipo}=this.props;
+      return(
+          <div>
+              <input 
+              type={tipo} 
+              placeholder={fondo} 
+              className="inputs" 
+              
+              />
+          </div>
+      )
+  }
 }
+
+export default Input
