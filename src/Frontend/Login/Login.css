@@ -1,0 +1,74 @@
+body{
+    background: url('../../Components//Fondo.png') no-repeat center center fixed;
+    
+}
+.login-container {
+    
+    font-family: Arial, sans-serif;
+    background-size: cover;
+    width: 100vw; /* Ancho completo de la ventana */
+    height: 100vh; /* Alto completo de la ventana */
+    background-color: #E9F4FACC;
+}
+  .navbar {
+    display: flex;
+    justify-content: flex-start;
+    gap: 20px;
+    padding: 10px 20px;
+    background-color: #85B5F399;
+  }
+  
+  .navbar a {
+    color: #00008B;
+    text-decoration: none;
+    padding: 10px;
+    display: flex;
+  }
+  .navbar .inicio{
+    flex: 1;
+  }
+  .navbar .otros{
+    display: flex;
+    flex: 1;
+    justify-content: space-around;
+}
+  
+  .navbar .active {
+    border-bottom: 2px solid #00008B;
+  }
+  
+  .login-box {
+    position: absolute;
+    top: 50%;
+    left: 80%;
+    transform: translate(-50%, -50%);
+    background: #A9C4E3CC;
+    padding: 50px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    width: 300px;
+    text-align: center;
+  }
+  .login-box input[type="text"],
+  .login-box input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .remember-me {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    font-size: 0.9em;
+  }
+  
+  .links a{
+      color: #00008B;
+      text-decoration: none;
+      display: block;
+      margin-top: 10px;
+      font-size:0.9rem;
+  }

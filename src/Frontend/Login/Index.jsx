@@ -1,7 +1,7 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import Input from '../../Components/Input';
 import Buton from '../../Components/Buton';
+import './Login.css'
 
 class Index extends React.Component  {
         
