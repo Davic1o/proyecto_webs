@@ -26,8 +26,8 @@ class Index extends React.Component  {
               </div>
               <div className="login-box">
                 <form onSubmit={handleSubmit}>
-                  <Input fondo="username"></Input>
-                  <input type="password" placeholder="password" required />
+                  <Input fondo="username" tipo="text"></Input>                  
+                  <Input fondo="password" tipo="password"></Input>
                   <div className="remember-me">
                     <input type="checkbox" /> Recuérdame
                   </div>

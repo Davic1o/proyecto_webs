@@ -1,6 +1,7 @@
 import React from 'react';
 import AppLayout from '../Containers/Layout.jsx';
 import Table from './Components/Table.jsx';
+import '../Users/Components/Table.css'
 
 
 class Index extends React.Component {
