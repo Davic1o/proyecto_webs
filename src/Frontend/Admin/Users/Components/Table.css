@@ -12,4 +12,12 @@
   }
   .tabla_users th{
     background-color: #ccc;
-  }
+  } 
+  .section-container {
+    
+    font-family: Arial, sans-serif;
+    background-size: cover;
+    width: 100vw; /* Ancho completo de la ventana */
+    height: 100vh; /* Alto completo de la ventana */
+    background-color: #E9F4FACC;
+}
