@@ -1,0 +1,38 @@
+.layout-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100vw;
+}
+
+.navbar {
+  background-color: rgba(0, 99, 249, 0.35);
+  width: 100%;
+  height: 5%;
+  display: flex;
+  color: rgba(0, 12, 146, 1);
+}
+
+.otros {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.otros * {
+  font-size: 20px;
+  margin: 15px 50px;
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+
+.otros *:hover {
+  transform: scale(1.2);
+}
+
+.content-area {
+  display: flex;
+  width: 100%;
+  height: 95%; /* Resto del espacio disponible después de la navbar */
+}

@@ -1,0 +1,55 @@
+.contendor_principal{
+    display: flex;
+    justify-content: flex-end; /* Centrar los hijos a la derecha */
+    align-items: center; /* Centrar verticalmente */
+    width: 95%;
+    height: 95%; /* Resto del espacio disponible después de la navbar */
+}
+.contenedor__Login {
+    display: flex;
+    justify-content: flex-end; /* Centrar los hijos a la derecha */
+    align-items: center; /* Centrar verticalmente */
+    background-color: rgba(0, 99, 249, 0.35); /* Fondo blanco para el formulario */
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    height: 500px;
+    width: 400px; /* Ancho del formulario */
+  }
+  
+  .form-login {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .remember-me,
+  .links {
+    width: 100%; /* Asegura que ocupen todo el ancho */
+  }
+  
+  .remember-me {
+    font-size: 16px;
+    margin-bottom: 20px;
+    text-align: left; /* Alinear a la izquierda */
+  }
+  
+  .links a {
+    font-size: 15px;
+    color: #595d5c; /* Color para los enlaces */
+    text-decoration: none;
+  }
+  
+  .links a:hover {
+    text-decoration: underline;
+  }
+  
+  
+  /* Enlace "¿Olvidaste tu contraseña?" al final del formulario */
+  .links:last-child {
+    margin-top: 10px; /* Empuja el último enlace hacia la parte inferior */
+    align-self: flex-start; /* Alinear al borde izquierdo */
+    display: flex; }

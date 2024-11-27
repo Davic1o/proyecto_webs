@@ -1,22 +1,13 @@
-import React, { Component } from 'react';
+import React from 'react';
 import './Buton.css';
 
-class Buton extends Component {
-  render() {
-    const { texto, onclick, estilo, type } = this.props;
-    
-    return (
-      <div>
-        <button
-          onClick={onclick}
-          className={estilo}
-          type={type}
-        >
-          {texto}
-        </button>
-      </div>
-    );
-  }
-}
+const Buton = ({ texto, onClick, estilo, type }) => {
+  return (
+    <button onClick={onClick} className={estilo} type={type}>
+      {texto}
+    </button>
+  );
+};
 
 export default Buton;
+
