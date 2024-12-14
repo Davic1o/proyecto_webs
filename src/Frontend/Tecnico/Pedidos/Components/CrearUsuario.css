@@ -1,0 +1,85 @@
+.crear-usuario {
+    width: 80%; /* Ocupa el 80% del ancho del contenedor padre */
+    height: 90%;
+    margin: 0 auto;
+    padding: 20px;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  
+  .crear-usuario h2 {
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: #333;
+    text-align: center;
+  }
+  
+  .formulario .form-group {
+      margin-bottom: 15px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 60px;
+    
+  }
+  
+  .formulario label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #555;
+  }
+  
+  .formulario input,
+  .formulario select {
+
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+  }
+  
+  .formulario input:focus,
+  .formulario select:focus {
+    border-color: #4caf50;
+    outline: none;
+  }
+  
+  .botones {
+    display: flex;
+    justify-content: flex-end; /* Alinea los botones a la derecha */
+    gap: 10px; /* Espaciado entre botones */
+  }
+  
+  .boton-crear,
+  .boton-cancelar {
+    margin-top: 40px;
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .boton-crear {
+    background-color: rgba(0, 12, 146, 1);
+    color: white;
+  }
+  
+  .boton-crear:hover {
+    background-color: rgb(1, 8, 90);
+  }
+  
+  .boton-cancelar {
+    background-color: rgba(139, 140, 150, 1);
+    color: white;
+  }
+  
+  .boton-cancelar:hover {
+    background-color: rgb(88, 88, 94);
+  }
+  

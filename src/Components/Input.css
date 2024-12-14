@@ -1,6 +1,25 @@
-.inputs{
-    padding: 8px;
-    margin-right: 10px;
-    border-radius: 10px;
+.input-container {
+    margin: 10px 0px;
+    position: relative;
+    width: 100%;
+  }
+  
+  .inputs {
+    width: 80%;
+    padding: 10px;
+    padding-right: 40px; /* Deja espacio para el ícono del ojo */
+    font-size: 16px;
     border: 1px solid #ccc;
-}
+    border-radius: 50px;
+  }
+  
+  .eye-icon {
+    position: absolute;
+    right: 40px; /* Ubica el ícono en la esquina derecha */
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    font-size: 20px;
+    color: #333;
+  }
+  

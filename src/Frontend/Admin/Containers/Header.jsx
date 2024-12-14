@@ -1,28 +1,63 @@
-import React from 'react'
+import React, { useState } from 'react';
+import { FaChevronDown } from 'react-icons/fa'; // Icono de flecha
+import { useNavigate } from 'react-router-dom'; // Para redirigir
+import Swal from 'sweetalert2'; // Importación de SweetAlert
 import Input from '../../../Components/Input';
-import Buton from '../../../Components/Buton';
-import './Header.css'
+import './Header.css';
 
-onclick=()=>{
-  console.log('click')
-}
-class Header extends React.Component {
-  
-  render(){
-    return (
-        <div className='user-header'>
-          <div className="buscador_header">
+const Header = () => {
+  const [search, setSearch] = useState('');
+  const [menuOpen, setMenuOpen] = useState(false); // Controla la visibilidad del menú
+  const navigate = useNavigate(); // Hook para navegación
 
-            <Input fondo="Buscar"></Input>
-            <Buton texto="Buscar" estilo="aceptar" 
-            type='button'
-            onClick={onclick}/>
-            </div>
-            <div className="bienvenido_user">Bienvenido Administrador</div>
+  const handleSearch = () => {
+    console.log('Search query:', search);
+    // Implementa la funcionalidad de búsqueda aquí
+  };
 
-        </div>
-    );
-  }
-  
-}
+  const toggleMenu = () => {
+    setMenuOpen((prev) => !prev); // Alterna el menú desplegable
+  };
+
+  const handleLogout = () => {
+    // Elimina la variable del localStorage
+    localStorage.removeItem('user');
+
+    // Muestra el mensaje de SweetAlert
+    Swal.fire({
+      icon: 'success',
+      title: 'Sesión cerrada',
+      text: 'Tu sesión se ha cerrado correctamente.',
+      confirmButtonText: 'Aceptar',
+    }).then(() => {
+      // Redirige a la página de inicio de sesión
+      navigate('/login');
+    });
+  };
+
+  return (
+    <div className="user-header">
+      <div className="buscador-header">
+        <Input
+          fondo="Buscar"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          className="search-input"
+        />
+      </div>
+      <div className="bienvenido-user" onClick={toggleMenu}>
+        Bienvenido Administrador
+        <FaChevronDown className="chevron-icon" />
+        {menuOpen && (
+          <div className="dropdown-menu">
+            <button onClick={handleLogout} className="menu-item">
+              Cerrar sesión
+            </button>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
+
 export default Header;
