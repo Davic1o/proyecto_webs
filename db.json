@@ -1,0 +1,96 @@
+{
+  "users": [
+    {
+      "username": "admin",
+      "email": "david123@gmail.com.es",
+      "direccion": "",
+      "telefono": "",
+      "RUC": "",
+      "profile": "Administrador",
+      "id": "1",
+      "password": "admin123"
+    },
+    {
+      "username": "cliente",
+      "email": "cliente123@gmail.com",
+      "direccion": "",
+      "telefono": "",
+      "RUC": "",
+      "profile": "Cliente",
+      "id": "2",
+      "password": "cliente123"
+    },
+    {
+      "username": "tecnico",
+      "email": "jorge123@gmail.com",
+      "direccion": "",
+      "telefono": "",
+      "RUC": "",
+      "profile": "Técnico",
+      "id": "3",
+      "password": "tecnico123"
+    }
+    
+  ],
+  "pedidos": [
+    {
+      "cliente": "David Vega",
+      "tecnico": "David Vega",
+      "trabajo": "Aprobado",
+      "id": "cd60"
+    },
+    {
+      "cliente": "Ana López",
+      "tecnico": "David Vega",
+      "trabajo": "Aprobado",
+      "id": "9dcd"
+    },
+    {
+      "cliente": "Carlos Pérez",
+      "tecnico": "David Vega",
+      "trabajo": "Rechazado",
+      "id": "3a5e"
+    },
+    {
+      "cliente": "María Ruiz",
+      "tecnico": "David Vega",
+      "trabajo": "Rechazado",
+      "id": "4fc4"
+    },
+    {
+      "id": "fa23",
+      "cliente": "",
+      "trabajo": ""
+    }
+  ],
+  "facturas": [
+    {
+      "cliente": "David Vega",
+      "factura": "001-002-000000989",
+      "valor": "$ 324,60",
+      "estado": "Autorizado",
+      "id": "aafa"
+    },
+    {
+      "cliente": "Juanito Alima",
+      "factura": "001-002-000000984",
+      "valor": "$ 324,60",
+      "estado": "Finalizado",
+      "id": "655d"
+    },
+    {
+      "cliente": "Bryan Lugmania",
+      "factura": "001-002-000000978",
+      "valor": "$ 324,60",
+      "estado": "Autorizado",
+      "id": "33df"
+    },
+    {
+      "cliente": "Dennis Perez",
+      "factura": "001-002-000000956",
+      "valor": "$ 324,60",
+      "estado": "Finalizado",
+      "id": "ffef"
+    }
+  ]
+}

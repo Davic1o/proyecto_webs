@@ -1,20 +1,36 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import AppLayout from './Pedidos/Containers/Layout.jsx';
 import Table from './Pedidos/Components/Table.jsx';
-
+import axios from 'axios';
 export default function Index() {
   // Gestionamos el estado de los pedidos
-  const [pedidos, SetPedidos] = useState([
-    { pedido: "Pe-uio-00000001", requerimiento: "Requerimiento de cambio de interruptor", rol: "Terminado" },
-    { pedido: "Pe-gye-00000002", requerimiento: "puesta a tierra en edificio renacimiento", rol: "Solicitado" },
-    { pedido: "Pe-cue-00000001", requerimiento: "cambio de cableado interno", rol: "En desarrollo" },
-    { pedido: "Pe-ibr-00003546", requerimiento: "instalacion de salida 220", rol: "Terminado" }
-  ]);
+  const token=localStorage.getItem('token')
+  const userStorage=localStorage.getItem('user')
+  const user=JSON.parse(userStorage)
+  console.log(user)
+  // Gestionamos el estado de los pedidos
+  const [pedidos, setPedidos] = useState([]);
+  const [clientes,setClientes]=useState([])
+  useEffect(()=>{
+    axios.get(`http://localhost:8000/pedidos/tecnicos/${user._id}`,{headers: {authorization:`Bearer ${token}`}})
+  .then(res => {
+    console.log("estos son los pedidos",res)
+    setPedidos(res.data.data)})
+  .catch(error => {console.log("Respuesta fallida: "+error.message)})
+  },[token, user._id])
+  useEffect(()=>{
+    axios.get("http://localhost:8000/users/clientes",{headers: {Authorization:`Bearer ${token}`}})
+  .then(res => {
+    console.log("estos son los clientes",res)
+    setClientes(res.data.data)})
+  .catch(error => {console.log("Respuesta fallida: "+error.message)})
+  },[])
+  
 
   return (
     <div className="section-container">
       <AppLayout>
-        <Table pedidos={pedidos} SetPedidos={SetPedidos} />
+        <Table pedidos={pedidos} setPedidos={setPedidos} token={token} user={user} clientes={clientes}/>
       </AppLayout>
     </div>
   );

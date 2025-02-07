@@ -1,32 +1,43 @@
+import axios from "axios";
 import React, { useState, useEffect } from "react";
 import Swal from "sweetalert2";
-import "./CrearVenta.css";
-import axios from "axios";
+import "../../Facturacion/Components/CrearVenta"
 
-const CrearVenta = ({onCancel, facturaToEdit,setFacturaToEdit}) => {
-  
-  const [nombre,setNombre]=useState(facturaToEdit.nombre)
-  const [email, setEmail] = useState(facturaToEdit.email);
-  const [direccion, setDireccion] = useState(facturaToEdit.direccion);
-  const [ciRuc, setCiRuc] = useState(facturaToEdit.RUC);
-  const [telefono, setTelefono] = useState(facturaToEdit.telefono);
+const CrearVenta = ({onCancel, pedido}) => {
+  const [cliente, setCliente] = useState("");
+  const [nombre,setNombre]=useState("")
+  const [email, setEmail] = useState("");
+  const [direccion, setDireccion] = useState("");
+  const [ciRuc, setCiRuc] = useState("");
+  const [telefono, setTelefono] = useState("");
   const [productos, setProductos] = useState([]);
   const [nuevoProducto, setNuevoProducto] = useState({
-    nombreProducto: "",
+    descripcion: "",
     cantidad: 1,
     precio: 0,
     grabaIVA: false,
   });
-  
-  useEffect(()=>{
-    axios.get(`http://localhost:8000/servicios/facturas/${facturaToEdit._id}`)
-      .then(response=>{
-        const productosFactura=response.data.data;
-        setProductos(productosFactura);
-      })
-      .catch(err=>console.log(err))
-  },[facturaToEdit])
-     
+  const [factura,setFactura]=useState("")
+  const token =localStorage.getItem('token');
+  useEffect(() => {
+    
+      if (pedido) {
+        
+        axios.get(`http://localhost:8000/users/byID/${pedido.cliente_id}`, {headers: {Authorization: `Bearer ${token}`}})
+          .then(res=>{
+            const clientePedido=res.data.data
+            console.log("este es el cliente:" ,clientePedido)
+            setCliente(res.data.data)
+            
+            setNombre(clientePedido.nombre)
+            setCiRuc(clientePedido.RUC)
+            setEmail(clientePedido.email)
+            setDireccion(clientePedido.direccion)
+            setTelefono(clientePedido.telefono)
+          })
+          .catch(error=>console.log(error))
+      }
+    }, [pedido,token]);
 
   const calcularTotales = () => {
     const subtotal15 = productos.reduce(
@@ -103,39 +114,46 @@ const CrearVenta = ({onCancel, facturaToEdit,setFacturaToEdit}) => {
       });
       return;
     }
-    setFacturaToEdit((prevFactura) => ({
-      ...prevFactura, // Mantén todos los campos existentes
-      nombre,         // Actualiza el nombre
-      direccion,      // Actualiza la dirección
-      telefono,       // Actualiza el teléfono
-      RUC: ciRuc,     // Actualiza el RUC
-      email,          // Actualiza el email
-      total: calcularTotales().total, // Actualiza el total basado en el cálculo actual
-    }));
-    axios.put(`http://localhost:8000/facturas/${facturaToEdit._id}`,facturaToEdit)
+    const nroFactura=generarNumeroFacturacion()
+    const fecha=new Date()
+    console.log(nombre)
+
+    const facturaGenerada = {
+      nombre,
+      direccion,
+      telefono,
+      RUC: ciRuc,
+      email,
+      nroFactura,
+      fecha,
+      cliente_id: cliente._id,
+      total: calcularTotales().total
+};
+  console.log("esta es la factura",factura)
+    axios.post(`http://localhost:8000/facturas/`,facturaGenerada,{headers: {Authorization: `Bearer ${token}`}})
           .then(res=>{
             productos.forEach(servicio=>{
-              axios.put(`http://localhost:8000/servicios/${servicio._id}`,{
+              axios.post(`http://localhost:8000/servicios/`,{
                 nombreServicio: servicio.nombreServicio,
                 cantidad: servicio.cantidad,
                 precio: servicio.precio,
                 grabaIVA: servicio.grabaIVA,
                 factura_id: res.data.data._id
-              })
+              },{headers: {Authorization: `Bearer ${token}`}})
               .then(res=>{
-                
+                Swal.fire({
+                  icon: "success",
+                  title: "Venta registrada",
+                  text: facturar
+                    ? "La venta se ha facturado correctamente al SRI."
+                    : "La venta se ha guardado correctamente.",
+                });
               })
               .catch(err=>console.log(err))
             })
           })
           .catch(error=>console.log(error))
-    Swal.fire({
-      icon: "success",
-      title: "Venta registrada",
-      text: facturar
-        ? "La venta se ha facturado correctamente al SRI."
-        : "La venta se ha guardado correctamente.",
-    });
+    
 
     // Reinicia los datos después de guardar
     
@@ -192,8 +210,8 @@ const CrearVenta = ({onCancel, facturaToEdit,setFacturaToEdit}) => {
         <input
           type="text"
           placeholder="Producto o Servicio"
-          value={nuevoProducto.nombreProducto}
-          onChange={(e) => setNuevoProducto({ ...nuevoProducto, nombreProducto: e.target.value })}
+          value={nuevoProducto.nombreServicio}
+          onChange={(e) => setNuevoProducto({ ...nuevoProducto, nombreServicio: e.target.value })}
         />
         <input
           type="number"
@@ -215,8 +233,8 @@ const CrearVenta = ({onCancel, facturaToEdit,setFacturaToEdit}) => {
         />
         <input
           type="checkbox"
-          checked={nuevoProducto.grabaIVA}
-          onChange={(e) => setNuevoProducto({ ...nuevoProducto, grabaIVA: e.target.checked })}
+          checked={nuevoProducto.grabaIva}
+          onChange={(e) => setNuevoProducto({ ...nuevoProducto, grabaIva: e.target.checked })}
         />
         Graba IVA
         <button className="add-button" onClick={agregarProducto}>+</button>
@@ -235,14 +253,14 @@ const CrearVenta = ({onCancel, facturaToEdit,setFacturaToEdit}) => {
         </thead>
         <tbody>
           {productos.map((producto) => (
-            <tr key={producto.id}>
+            <tr key={producto._id}>
               <td>{producto.nombreServicio}</td>
               <td>{producto.cantidad}</td>
               <td>${producto.precio.toFixed(2)}</td>
               <td>${(producto.cantidad * producto.precio).toFixed(2)}</td>
               <td>{producto.grabaIva ? "Sí" : "No"}</td>
               <td>
-                <button className="delete-button" onClick={() => eliminarProducto(producto.id)}>🗑️</button>
+                <button className="delete-button" onClick={() => eliminarProducto(producto)}>🗑️</button>
               </td>
             </tr>
           ))}
@@ -266,5 +284,3 @@ const CrearVenta = ({onCancel, facturaToEdit,setFacturaToEdit}) => {
 };
 
 export default CrearVenta;
-
-

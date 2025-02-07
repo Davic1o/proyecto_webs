@@ -9,7 +9,8 @@ const Header = () => {
   const [search, setSearch] = useState('');
   const [menuOpen, setMenuOpen] = useState(false); // Controla la visibilidad del menú
   const navigate = useNavigate(); // Hook para navegación
-
+  const userStorage=localStorage.getItem('user')
+  const user = userStorage ? JSON.parse(userStorage) : { nombre: 'Cliente' };
   const handleSearch = () => {
     console.log('Search query:', search);
     // Implementa la funcionalidad de búsqueda aquí
@@ -38,15 +39,10 @@ const Header = () => {
   return (
     <div className="user-header">
       <div className="buscador-header">
-        <Input
-          fondo="Buscar"
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          className="search-input"
-        />
+    
       </div>
       <div className="bienvenido-user" onClick={toggleMenu}>
-        Bienvenido Tecnico
+        Bienvenido {user.nombre}
         <FaChevronDown className="chevron-icon" />
         {menuOpen && (
           <div className="dropdown-menu">

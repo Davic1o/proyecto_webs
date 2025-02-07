@@ -22,6 +22,7 @@ const Header = () => {
   const handleLogout = () => {
     // Elimina la variable del localStorage
     localStorage.removeItem('user');
+    localStorage.removeItem('token')
 
     // Muestra el mensaje de SweetAlert
     Swal.fire({
@@ -38,12 +39,7 @@ const Header = () => {
   return (
     <div className="user-header">
       <div className="buscador-header">
-        <Input
-          fondo="Buscar"
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          className="search-input"
-        />
+
       </div>
       <div className="bienvenido-user" onClick={toggleMenu}>
         Bienvenido Administrador

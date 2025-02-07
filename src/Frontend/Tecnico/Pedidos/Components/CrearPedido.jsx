@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Input from "../../../../Components/Input";
 import Button from "../../../../Components/Buton";
 import Swal from "sweetalert2";
-import "./CrearUsuario.css";
+import "./CrearPedido.css"
 
 // Datos de provincias y ciudades
 const provinciasConCiudades = {
@@ -23,22 +23,25 @@ const getNextPedidoNumber = (ciudad) => {
   return (pedidosPorCiudad[ciudad] || 0) + 1;
 };
 
-const CrearUsuario = ({ onCancel, userToEdit, onSave }) => {
+const CrearPedido = ({ onCancel, pedidoToEdit, onSave,clientes, user}) => {
   const [pedido, setPedido] = useState("");
   const [requerimiento, SetRequerimiento] = useState("");
   const [provincia, setProvincia] = useState("");
   const [ciudad, setCiudad] = useState("");
   const [direccion, setDireccion] = useState("");
+  const [cliente,setCliente]= useState("")
+  
 
   useEffect(() => {
-    if (userToEdit) {
-      setPedido(userToEdit.pedido || "");
-      SetRequerimiento(userToEdit.requerimiento || "");
-      setProvincia(userToEdit.provincia || "");
-      setCiudad(userToEdit.ciudad || "");
-      setDireccion(userToEdit.direccion || "");
+    if (pedidoToEdit) {
+      setPedido(pedidoToEdit.nroPedido || "");
+      SetRequerimiento(pedidoToEdit.descripcion || "");
+      setProvincia(pedidoToEdit.provincia || "");
+      setCiudad(pedidoToEdit.ciudad || "");
+      setDireccion(pedidoToEdit.direccion || "");
+      setCliente({nombre: pedidoToEdit.cliente, id: pedidoToEdit.cliente_id} || "")
     }
-  }, [userToEdit]);
+  }, [pedidoToEdit]);
 
   useEffect(() => {
     if (ciudad) {
@@ -56,7 +59,7 @@ const CrearUsuario = ({ onCancel, userToEdit, onSave }) => {
   };
 
   const handleSubmit = () => {
-    if (!requerimiento.trim() || !provincia.trim() || !ciudad.trim() || !direccion.trim()) {
+    if (!requerimiento.trim() || !provincia.trim() || !ciudad.trim() || !direccion.trim() || cliente.nombre==null){
       Swal.fire({
         icon: "error",
         title: "Error",
@@ -64,23 +67,34 @@ const CrearUsuario = ({ onCancel, userToEdit, onSave }) => {
       });
       return;
     }
+    console.log(pedidoToEdit)
+    
+    let newPedido={}
+    if(pedidoToEdit!=null){
+      newPedido = {_id: pedidoToEdit._id, nroPedido: pedido, descripcion: requerimiento, provincia, ciudad, direccion, estado:pedidoToEdit.estado, cliente_id:cliente.id, tecnico_id:user._id, fecha: new Date() };
 
-    const newPedido = { pedido, requerimiento, provincia, ciudad, direccion, rol:"Solicitado" };
+      
+      onSave(newPedido);
+      return
+    }
+    
+    newPedido = {nroPedido: pedido, descripcion: requerimiento, provincia, ciudad, direccion, estado:"Solicitado", cliente_id:cliente.id, tecnico_id:user._id, fecha: new Date() };
     onSave(newPedido);
-
+    console.log("Este es el nuevo pedido", newPedido)
+    
     Swal.fire({
       icon: "success",
-      title: userToEdit ? "Pedido actualizado" : "Pedido creado",
+      title: pedidoToEdit ? "Pedido actualizado" : "Pedido creado",
       text: "Los cambios se han guardado exitosamente.",
     });
   };
 
   return (
-    <div className="crear-usuario">
-      <h2>{userToEdit ? `Editar Pedido ${pedido}` : "Crear Pedido"}</h2>
-      <div className="formulario">
+    <div className="crear-pedido">
+      <h2>{pedidoToEdit ? `Editar Pedido ${pedido}` : "Crear Pedido"}</h2>
+      <div className="formulario-pedido">
         {/* Nro de Pedido */}
-        <div className="form-group">
+        <div className="form-group-pedido">
           <label htmlFor="pedido">Nro de Pedido</label>
           <Input
             id="pedido"
@@ -91,7 +105,7 @@ const CrearUsuario = ({ onCancel, userToEdit, onSave }) => {
         </div>
 
         {/* requerimiento del Pedido */}
-        <div className="form-group">
+        <div className="form-group-pedido">
           <label htmlFor="requerimiento">requerimiento del Pedido</label>
           <textarea
             id="requerimiento"
@@ -112,7 +126,7 @@ const CrearUsuario = ({ onCancel, userToEdit, onSave }) => {
         </div>
 
         {/* Provincia */}
-        <div className="form-group">
+        <div className="form-group-pedido">
           <label htmlFor="provincia">Provincia</label>
           <select
             id="provincia"
@@ -134,7 +148,7 @@ const CrearUsuario = ({ onCancel, userToEdit, onSave }) => {
         </div>
 
         {/* Ciudad */}
-        <div className="form-group">
+        <div className="form-group-pedido">
           <label htmlFor="ciudad">Ciudad</label>
           <select
             id="ciudad"
@@ -154,8 +168,9 @@ const CrearUsuario = ({ onCancel, userToEdit, onSave }) => {
           </select>
         </div>
 
+
         {/* Dirección */}
-        <div className="form-group">
+        <div className="form-group-pedido">
           <label htmlFor="direccion">Dirección</label>
           <Input
             id="direccion"
@@ -165,6 +180,31 @@ const CrearUsuario = ({ onCancel, userToEdit, onSave }) => {
             required
           />
         </div>
+        <div className="form-group-pedido">
+          <label htmlFor="rol">Cliente</label>
+          <select
+             id="cliente"
+             value={cliente.id || ""}
+             onChange={(e) => {
+               const selectedId = e.target.value;
+               const selectedCliente = clientes.find((cli) => cli._id === selectedId);
+               setCliente({
+                 id: selectedId,
+                 nombre: selectedCliente?.nombre || ""
+               });
+             }}
+             className="input-field"
+             required
+           >
+             <option value="">{cliente.nombre ? cliente.nombre : "Selecciona un cliente"}</option>
+             {clientes.map((cli) => (
+               <option key={cli._id} value={cli._id}>
+                 {cli.nombre}
+               </option>
+             ))}
+          </select>
+        </div>
+        
       </div>
 
       <div className="botones">
@@ -175,4 +215,5 @@ const CrearUsuario = ({ onCancel, userToEdit, onSave }) => {
   );
 };
 
-export default CrearUsuario;
+export default CrearPedido;
+

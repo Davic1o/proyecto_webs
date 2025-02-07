@@ -1,12 +1,13 @@
-.crear-usuario {
+.crear-pedido{
     width: 70%; /* Ocupa el 80% del ancho del contenedor padre */
     height: 90%;
     margin: 0 auto;
-    padding: 20px;
+    padding-top:150px;
     border-radius: 8px;
     display: flex;
     flex-direction: column;
     justify-content: center;
+    
   }
   
   .crear-usuario h2 {
@@ -16,7 +17,7 @@
     text-align: center;
   }
   
-  .formulario .form-group {
+  .formulario-pedido .form-group-pedido {
       margin-bottom: 15px;
       display: flex;
       justify-content: center;
@@ -25,15 +26,15 @@
     
   }
   
-  .formulario label {
+  .formulario-pedido label {
     display: block;
     margin-bottom: 5px;
     font-weight: bold;
     color: #555;
   }
   
-  .formulario input,
-  .formulario select {
+  .formulario-pedido input,
+  .formulario-pedido select {
 
     width: 90%;
     padding: 10px;
@@ -42,8 +43,8 @@
     font-size: 14px;
   }
   
-  .formulario input:focus,
-  .formulario select:focus {
+  .formulario-pedido input:focus,
+  .formulario-pedido select:focus {
     border-color: #4caf50;
     outline: none;
   }

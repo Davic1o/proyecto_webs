@@ -57,7 +57,7 @@
 .delete-icon:hover {
   color: #d32f2f;
 }
-.modal {
+.modal-pedido {
   position: fixed;
   top: 0;
   left: 0;
@@ -68,15 +68,17 @@
   justify-content: center;
   align-items: center;
   z-index: 1000;
+  overflow-y: auto;
 }
 
-.modal-content {
+.modal-content-pedidos {
   background: rgba(235, 240, 252, 1);
   padding: 20px;
   border-radius: 8px;
   text-align: center;
-  width: 500px;
-  height: 600px;
+  width: 600px;
+  height: 1200px;
+  
 }
 
 .close-modal-button {

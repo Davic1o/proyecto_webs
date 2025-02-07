@@ -5,12 +5,13 @@ import Button from '../../../../Components/Buton';
 import CrearUsuario from './CrearUsuario';
 import Swal from 'sweetalert2'; // Importar SweetAlert2
 import './Table.css';
+import axios from 'axios';
 
 const Table = ({ usuarios, setUsuarios }) => {
   const [search, setSearch] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [userToEdit, setUserToEdit] = useState(null); // Para editar un usuario
-
+  const token = localStorage.getItem('token');
   const filteredUsers = usuarios.filter((user) =>
     user.nombre.toLowerCase().includes(search.toLowerCase())
   );
@@ -26,41 +27,74 @@ const Table = ({ usuarios, setUsuarios }) => {
   };
 
   const handleDelete = (user) => {
+    console.log(user._id);
     Swal.fire({
-      title: '¿Estás seguro?',
-      text: `¿Quieres eliminar a ${user.nombre}?`,
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#d33',
-      cancelButtonColor: '#3085d6',
-      confirmButtonText: 'Sí, eliminar',
-      cancelButtonText: 'Cancelar'
+        title: '¿Estás seguro?',
+        text: `¿Quieres eliminar a ${user.nombre}?`,
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Sí, eliminar',
+        cancelButtonText: 'Cancelar'
     }).then((result) => {
-      if (result.isConfirmed) {
-        // Eliminar usuario por email
-        setUsuarios(usuarios.filter((u) => u.email !== user.email));
-        Swal.fire(
-          'Eliminado!',
-          `El usuario ${user.nombre} ha sido eliminado.`,
-          'success'
-        );
-      }
+        if (result.isConfirmed) {
+            // Eliminar usuario por ID
+            axios
+                .delete(`http://localhost:8000/users/${user._id}`, {headers: {Authorization: `Bearer ${token}`}})
+                .then((res) => {
+                  console.log("esta es la respuesta al eliminar:" +res)
+                  setUsuarios((prevUsuarios) => prevUsuarios.filter((u) => u._id !== user._id));
+                    Swal.fire(
+                        'Eliminado!',
+                        `El usuario ${user.nombre} ha sido eliminado.`,
+                        'success'
+                    );
+                })
+                .catch((error) => {
+                    console.log("Respuesta fallida: " + error);
+                    Swal.fire(
+                        'Error!',
+                        'No se pudo eliminar el usuario. Intenta de nuevo.',
+                        'error'
+                    );
+                });
+        }
     });
-  };
+};
 
   const handleSaveUser = (newUser) => {
+    console.log(userToEdit)
     if (userToEdit) {
       // Si estamos editando un usuario, lo actualizamos
-      setUsuarios(usuarios.map((user) =>
-        user.email === userToEdit.email ? newUser : user
-      ));
+      axios
+        .put(`http://localhost:8000/users/${userToEdit._id}`, newUser, {headers: {Authorization: `Bearer ${token}`}})
+        .then((res) => {
+          // Actualizamos el array de usuarios con la respuesta del servidor
+          setUsuarios((prevUsuarios) =>
+            prevUsuarios.map((user) =>
+              user._id === userToEdit._id ? res.data.data : user
+            )
+          );
+        })
+        .catch((error) => {
+          console.log("Respuesta fallida: " + error);
+        });
     } else {
       // Si no estamos editando, agregamos uno nuevo
-      setUsuarios([...usuarios, newUser]);
+      console.log("este es el usuario que se esta mandando",newUser)
+      axios
+        .post("http://localhost:8000/users", newUser, {headers: {Authorization: `Bearer ${token}`}})
+        .then((res) => {
+          setUsuarios((prevUsuarios) => [...prevUsuarios, res.data.data]);
+        })
+        .catch((error) => {
+          console.log("Respuesta fallida: " + error.message);
+        });
     }
+  
     setIsModalOpen(false); // Cerrar el modal
   };
-
   return (
     <div className="Contendor-generaltabla">
       <div className="filter-container">
@@ -75,7 +109,7 @@ const Table = ({ usuarios, setUsuarios }) => {
 
       {isModalOpen && (
         <div className="modal">
-          <div className="modal-content">
+          <div className="modal-content-users">
             <CrearUsuario
               onCancel={toggleModal}
               userToEdit={userToEdit}
@@ -103,7 +137,7 @@ const Table = ({ usuarios, setUsuarios }) => {
                 <tr key={index}>
                   <td>{user.nombre}</td>
                   <td>{user.email}</td>
-                  <td>{user.rol}</td>
+                  <td>{user.profile}</td>
                   <td>
                     <FaEdit
                       className="icon edit-icon"

@@ -32,6 +32,7 @@ export default function Rutas() {
       {loading ? (
         <Loading />
       ) : (
+        
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/Login" element={<Login />} />
@@ -39,9 +40,9 @@ export default function Rutas() {
           <Route path="/Admin-User" element={<AdminUser />} />
           <Route path="/Admin-Pedidos" element={<AdminPedidos />} />
           <Route path="/Admin-Facturacion" element={<AdminFacturacion />} />
-          <Route path="/Tecnico-Pedidos" element={<TecnicoPedidos />} />
-          <Route path="/Cliente-Pedidos" element={<ClientePedidos />} />
-          <Route path="/Cliente-Facturacion" element={<ClienteFacturacion />} />
+          <Route path="/Tecnico-Pedidos/" element={<TecnicoPedidos />} />
+          <Route path="/Cliente-Pedidos/" element={<ClientePedidos />} />
+          <Route path="/Cliente-Facturacion/" element={<ClienteFacturacion />} />
         </Routes>
       )}
     </div>

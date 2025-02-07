@@ -1,12 +1,11 @@
-import Login from './Frontend/Login/Index'
-import Usuarios from './Frontend/Admin/Users/Index'
-import Facturacion from './Frontend/Admin/Facturacion/Index'
+import Rutas from './Routes/Rutas'
 
 
 function App() {
   return (
     <div className="App">
-     <Login/>
+     
+        <Rutas/>
  
     </div>
   );

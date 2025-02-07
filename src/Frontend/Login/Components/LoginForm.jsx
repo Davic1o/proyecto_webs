@@ -1,62 +1,65 @@
-import React, { useState } from 'react';
+import React, { useState} from 'react';
 import Input from '../../../Components/Input';
 import Buton from '../../../Components/Buton';
 import './LoginForm.css';
 import { Link, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';  // Importar SweetAlert
+import axios from 'axios'
 
 const LoginForm = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate(); // Usamos useNavigate
-
-  // Arreglo con los usuarios definidos
-  const users = [
-    { username: 'admin', password: 'admin123', profile: 'admin' },
-    { username: 'cliente', password: 'cliente123', profile: 'cliente' },
-    { username: 'tecnico', password: 'tecnico123', profile: 'tecnico' },
-  ];
+  
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    
-    const user = users.find(
-      (user) => user.username === username && user.password === password
-    );
+    axios.post(`http://localhost:8000/login/users`,{username, password})
+      .then(res => {
+        const user = res.data.user
+        localStorage.setItem('user', JSON.stringify(user)); 
+        const token= res.data.token
+        localStorage.setItem('token', JSON.stringify(token)); 
+        // constokenole.log("este es el profile")
+        // const token=res.data.
+        
+        if (user.profile) {
+          // Mostrar alerta de éxito
+           
+          
+          Swal.fire({
+            title: '¡Bienvenido!',
+            text: 'Has iniciado sesión correctamente.',
+            icon: 'success',
+            confirmButtonText: 'Aceptar',
+          });
 
-    if (user) {
-      localStorage.setItem('user', JSON.stringify(user)); // Guardar el usuario en el localStorage
-      setError('');
-      
-      // Mostrar alerta de éxito
-      Swal.fire({
-        title: '¡Bienvenido!',
-        text: 'Has iniciado sesión correctamente.',
-        icon: 'success',
-        confirmButtonText: 'Aceptar'
+          // Redirigir según el perfil
+          if (user.profile === "admin") {
+            console.log('Redirigiendo a:', '/Admin-User');
+            
+            navigate('/Admin-User');
+          } else if (user.profile === 'cliente') {
+            navigate(`/Cliente-pedidos/`);
+          } else if (user.profile=== 'tecnico') {
+            navigate(`/Tecnico-Pedidos/`);
+          }
+        }
+      })
+      .catch(error => {console.log("Respuesta fallida: "+error)
+       
+        setError('Usuario o contraseña incorrectos');
+
+        // Mostrar alerta de error
+        Swal.fire({
+          title: 'Error',
+          text: 'Usuario o contraseña incorrectos.',
+          icon: 'error',
+          confirmButtonText: 'Intentar de nuevo',
+        });
       });
 
-      // Redirigir según el perfil
-      if (user.profile === 'admin') {
-        navigate('/Admin-User');
-      } else if (user.profile === 'cliente') {
-        navigate('/Cliente-pedidos');
-      } else if (user.profile === 'tecnico') {
-        navigate('/Tecnico-Pedidos');
-      }
-    } else {
-      // Si no se encuentra el usuario, mostrar mensaje de error
-      setError('Usuario o contraseña incorrectos');
-
-      // Mostrar alerta de error
-      Swal.fire({
-        title: 'Error',
-        text: 'Usuario o contraseña incorrectos.',
-        icon: 'error',
-        confirmButtonText: 'Intentar de nuevo'
-      });
-    }
   };
 
   return (

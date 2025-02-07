@@ -6,6 +6,7 @@ import './AppLayout.css';
 import { useNavigate } from 'react-router-dom'; // Usar useNavigate
 
 const AppLayout = ({ children }) => {
+  
   const [isAdmin, setIsAdmin] = useState(false);
   const navigate = useNavigate(); // Hook para navegar
 

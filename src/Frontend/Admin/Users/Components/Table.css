@@ -68,15 +68,16 @@
   justify-content: center;
   align-items: center;
   z-index: 1000;
+  overflow-y: auto;
 }
 
-.modal-content {
+.modal-content-users {
   background: rgba(235, 240, 252, 1);
   padding: 20px;
   border-radius: 8px;
   text-align: center;
   width: 500px;
-  height: 600px;
+  height: 800px;
 }
 
 .close-modal-button {
