@@ -81,6 +81,11 @@ const Table = ({ pedidos, setPedidos,clientes, tecnicos }) => {
 
   request
     .then((res) => {
+      Swal.fire({
+        icon: "success",
+        title: res.data.data.nroPedido ? "Pedido actualizado" : "Pedido creado",
+        text: "Los cambios se han guardado exitosamente.",
+      });
       setPedidos((prevPedidos) => {
         if (newPedido._id) {
           // Actualizar el pedido editado
@@ -94,6 +99,10 @@ const Table = ({ pedidos, setPedidos,clientes, tecnicos }) => {
     })
     .catch((error) => {
       console.log("Error al guardar el pedido:", error);
+      Swal.fire({
+        icon: "Error",
+        text: "Error al crear pedido",
+      });
     });
   
     setIsModalOpen(false); // Cerrar el modal

@@ -6,15 +6,12 @@ import Input from '../../../Components/Input';
 import './Header.css';
 
 const Header = () => {
-  const [search, setSearch] = useState('');
+  
   const [menuOpen, setMenuOpen] = useState(false); // Controla la visibilidad del menú
   const navigate = useNavigate(); // Hook para navegación
   const userStorage=localStorage.getItem('user')
   const user = userStorage ? JSON.parse(userStorage) : { nombre: 'Cliente' };
-  const handleSearch = () => {
-    console.log('Search query:', search);
-    // Implementa la funcionalidad de búsqueda aquí
-  };
+  
 
   const toggleMenu = () => {
     setMenuOpen((prev) => !prev); // Alterna el menú desplegable

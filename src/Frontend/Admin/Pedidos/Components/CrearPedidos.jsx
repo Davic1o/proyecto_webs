@@ -61,7 +61,8 @@ const CrearPedidos = ({ onCancel, pedidoToEdit, onSave,tecnicos,clientes }) => {
   };
 
   const handleSubmit = () => {
-    if (!requerimiento.trim() || !provincia.trim() || !ciudad.trim() || !direccion.trim() || cliente.nombre==null || tecnico.nombre==null){
+    console.log("este es el nombre y tecnico", cliente.nombre, tecnico.nombre)
+    if (!requerimiento.trim() || !provincia.trim() || !ciudad.trim() || !direccion.trim() || !cliente.nombre.trim() || !tecnico.nombre.trim()){
       Swal.fire({
         icon: "error",
         title: "Error",
@@ -73,7 +74,7 @@ const CrearPedidos = ({ onCancel, pedidoToEdit, onSave,tecnicos,clientes }) => {
     
     let newPedido={}
     if(pedidoToEdit!=null){
-      newPedido = {_id: pedidoToEdit._id, nroPedido: pedido, descripcion: requerimiento, provincia, ciudad, direccion, estado:pedidoToEdit.estado, cliente_id:cliente.id, tecnico_id:tecnico.id, fecha: new Date() };
+      newPedido = {_id: pedidoToEdit._id, nroPedido: pedido, descripcion: requerimiento, provincia, ciudad, direccion, estado:pedidoToEdit.estado, cliente_id:cliente.id, tecnico_id:tecnico.id, fecha: pedidoToEdit.fecha };
       onSave(newPedido);
       return
     }
@@ -81,11 +82,7 @@ const CrearPedidos = ({ onCancel, pedidoToEdit, onSave,tecnicos,clientes }) => {
     onSave(newPedido);
     console.log("Este es el nuevo pedido", newPedido)
     
-    Swal.fire({
-      icon: "success",
-      title: pedidoToEdit ? "Pedido actualizado" : "Pedido creado",
-      text: "Los cambios se han guardado exitosamente.",
-    });
+    
   };
 
   return (

@@ -3,42 +3,77 @@ import AppLayout from '../Containers/Layout.jsx';
 import Table from './Components/Table.jsx';
 import '../Users/Components/Table.css';
 import axios from 'axios';
+import Loading from '../../../Components/Loading.jsx';
+
 
 export default function Index() {
-  // Gestionamos el estado de los usuarios
-  const [pedidos, setPedidos] = useState([
-  ]);
-  const [clientes,setClientes]=useState([])
-  const [tecnicos,setTecnicos]=useState([])
-  const token =localStorage.getItem('token');
-  
- 
-  useEffect(()=>{
-    axios.get("http://localhost:8000/users/clientes",{headers: {Authorization:`Bearer ${token}`}})
-  .then(res => {
-    console.log("estos son los clientes",res)
-    setClientes(res.data.data)})
-  .catch(error => {console.log("Respuesta fallida: "+error.message)})
-  },[])
-  useEffect(()=>{
-    axios.get("http://localhost:8000/users/tecnicos",{headers: {Authorization:`Bearer ${token}`}})
-  .then(res => {
-    console.log("estos son los tecnicos",res)
-    setTecnicos(res.data.data)})
-  .catch(error => {console.log("Respuesta fallida: "+error.message)})
-  },[])
-  useEffect(()=>{
-    axios.get("http://localhost:8000/pedidos",{headers: {authorization:`Bearer ${token}`}})
-  .then(res => {
-    console.log("estos son los pedidos",res)
-    setPedidos(res.data.data)})
-  .catch(error => {console.log("Respuesta fallida: "+error.message)})
-  },[])
+  const [pedidos, setPedidos] = useState([]);
+  const [clientes, setClientes] = useState([]);
+  const [tecnicos, setTecnicos] = useState([]);
+  const [loadingClientes, setLoadingClientes] = useState(true);
+  const [loadingTecnicos, setLoadingTecnicos] = useState(true);
+  const [loadingPedidos, setLoadingPedidos] = useState(true);
+
+  const token = localStorage.getItem("token");
+
+  useEffect(() => {
+    const fetchClientes = async () => {
+      try {
+        const res = await axios.get("http://localhost:8000/users/clientes", {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        setClientes(res.data.data);
+      } catch (error) {
+        console.error("Error al obtener clientes:", error.message);
+      } finally {
+        setLoadingClientes(false);
+      }
+    };
+
+    const fetchTecnicos = async () => {
+      try {
+        const res = await axios.get("http://localhost:8000/users/tecnicos", {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        setTecnicos(res.data.data);
+      } catch (error) {
+        console.error("Error al obtener técnicos:", error.message);
+      } finally {
+        setLoadingTecnicos(false);
+      }
+    };
+
+    const fetchPedidos = async () => {
+      try {
+        const res = await axios.get("http://localhost:8000/pedidos", {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        setPedidos(res.data.data);
+      } catch (error) {
+        console.error("Error al obtener pedidos:", error.message);
+      } finally {
+        setLoadingPedidos(false);
+      }
+    };
+
+    fetchClientes();
+    fetchTecnicos();
+    fetchPedidos();
+  }, [token]);
 
   return (
     <div className="section-container">
       <AppLayout>
-        <Table pedidos={pedidos} setPedidos={setPedidos} clientes={clientes}  tecnicos={tecnicos} />
+        {loadingClientes || loadingTecnicos || loadingPedidos ? (
+          <Loading />
+        ) : (
+          <Table
+            pedidos={pedidos}
+            setPedidos={setPedidos}
+            clientes={clientes}
+            tecnicos={tecnicos}
+          />
+        )}
       </AppLayout>
     </div>
   );

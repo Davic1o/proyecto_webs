@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import Login from '../Frontend/Login/Index';
-import Home from '../Frontend/Landing/Index';
+import Home from '../Frontend/Landing/Home';
 import Register from '../Frontend/Register/Index';
 import AdminUser from '../Frontend/Admin/Users/Index';
 import AdminPedidos from '../Frontend/Admin/Pedidos/Index';
@@ -10,31 +10,18 @@ import TecnicoPedidos from '../Frontend/Tecnico/Index';
 import ClientePedidos from '../Frontend/Cliente/Index';
 import ClienteFacturacion from '../Frontend/Cliente/Facturacion'
 import AdminFacturacion from '../Frontend/Admin/Facturacion/Index';
-import Loading from '../Components/Loading'; 
+
+import Nosotros from '../Frontend/Landing/Nosotros';
+import Contacto from '../Frontend/Landing/Contacto';
 
 export default function Rutas() {
-  const [loading, setLoading] = useState(false);
-  const location = useLocation();
-
-  useEffect(() => {
-    // Cuando cambia la ubicación, mostramos el loading
-    setLoading(true);
-
-    const timer = setTimeout(() => {
-      setLoading(false); // Simula que la vista se carga después de 1 segundo
-    }, 1000); // Ajusta el tiempo según lo que necesites
-
-    return () => clearTimeout(timer); // Limpiar el temporizador si el componente se desmonta antes
-  }, [location]); // Detecta el cambio de ubicación
 
   return (
-    <div>
-      {loading ? (
-        <Loading />
-      ) : (
         
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/Nosotros" element={<Nosotros />} />
+          <Route path="/Contacto" element={<Contacto />} />
           <Route path="/Login" element={<Login />} />
           <Route path="/Register" element={<Register />} />
           <Route path="/Admin-User" element={<AdminUser />} />
@@ -44,7 +31,8 @@ export default function Rutas() {
           <Route path="/Cliente-Pedidos/" element={<ClientePedidos />} />
           <Route path="/Cliente-Facturacion/" element={<ClienteFacturacion />} />
         </Routes>
-      )}
-    </div>
-  );
-}
+      )
+    }
+    
+
+

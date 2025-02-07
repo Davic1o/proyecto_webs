@@ -64,7 +64,7 @@ const LoginForm = () => {
 
   return (
     <div className="contendor_principal">
-      <div className="contenedor__Login">
+      <div className="contenedor__Login_1">
         <form onSubmit={handleSubmit} className='form-login'>
           <Input
             fondo="username"

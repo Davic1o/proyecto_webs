@@ -12,6 +12,7 @@ const Table = ({ usuarios, setUsuarios }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [userToEdit, setUserToEdit] = useState(null); // Para editar un usuario
   const token = localStorage.getItem('token');
+  
   const filteredUsers = usuarios.filter((user) =>
     user.nombre.toLowerCase().includes(search.toLowerCase())
   );

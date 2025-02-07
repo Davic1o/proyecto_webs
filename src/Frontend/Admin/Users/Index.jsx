@@ -3,24 +3,34 @@ import AppLayout from '../Containers/Layout.jsx';
 import Table from './Components/Table.jsx';
 import '../Users/Components/Table.css';
 import axios from 'axios';
+import Loading from '../../../Components/Loading.jsx';
 
 export default function Index() {
-  // Gestionamos el estado de los usuarios
-  const [usuarios, setUsuarios] = useState(
-  []);
-  const token= localStorage.getItem('token');
-  useEffect(()=>{
-    axios.get("http://localhost:8000/users",{headers: {Authorization: `Bearer ${token}`}})
-  .then(users => {
-    console.log(users)
-    setUsuarios(users.data.data)})
-  .catch(error => {console.log("Respuesta fallida: "+error)})
-  },[])
+  const [loading, setLoading] = useState(true); // Estado para mostrar la carga
+  const [usuarios, setUsuarios] = useState([]); // Estado para los usuarios
+  const token = localStorage.getItem("token");
+
+  useEffect(() => {
+    const fetchUsuarios = async () => {
+      try {
+        const response = await axios.get("http://localhost:8000/users", {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        setUsuarios(response.data.data); // Asigna los datos obtenidos
+      } catch (error) {
+        console.error("Error al obtener usuarios:", error);
+      } finally {
+        setLoading(false); // Finaliza la carga
+      }
+    };
+
+    fetchUsuarios();
+  }, [token]);
 
   return (
     <div className="section-container">
       <AppLayout>
-        <Table usuarios={usuarios} setUsuarios={setUsuarios} />
+        {loading ? <Loading /> : <Table usuarios={usuarios} setUsuarios={setUsuarios} />}
       </AppLayout>
     </div>
   );

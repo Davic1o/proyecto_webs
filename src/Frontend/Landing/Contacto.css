@@ -1,0 +1,35 @@
+.contact-section {
+    background-color: none;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  
+  .contact-info {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    gap: 2rem;
+    margin-top: 2rem;
+  }
+  
+  .contact-item {
+    background-color: #e8c32a;
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    width: 240px;
+    text-align: center;
+  }
+  
+  .contact-item h2 {
+    margin-bottom: 1rem;
+    color: #007acc;
+  }
+  
+  .contact-item p {
+    color: #333;
+  }

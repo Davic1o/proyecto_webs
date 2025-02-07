@@ -1,0 +1,83 @@
+/* Nosotros.css */
+.landing-container {
+  display: flex;
+  justify-content: center;
+  padding: 2rem;
+  height: 90%;
+  width: 90%;
+}
+.about-section-container {
+  display: flex;
+  gap: 2rem;
+  max-width: 90%;
+  align-items: center;
+}
+.about-section {
+  background: none;
+  padding: 3rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  max-width: 1200px;
+  margin: 3rem auto;
+  text-align: center;
+}
+
+.about-section h1 {
+  color: #333;
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+.about-section p {
+  color: #555;
+  font-size: 1.1rem;
+  line-height: 1.8;
+  margin-bottom: 2rem;
+}
+
+.about-section h2 {
+  font-size: 2rem;
+  color: #0073e6;
+  margin-top: 1.5rem;
+}
+
+.about-section ul {
+  list-style: none;
+  padding: 0;
+  margin: 1rem 0;
+}
+
+.about-section ul li {
+  background:  #87cdee;
+  padding: 0.8rem 1rem;
+  margin: 0.5rem 0;
+  color: #333;
+  border-radius: 8px;
+  font-size: 1rem;
+  text-align: left;
+}
+
+.about-section ul li::before {
+  content: '⚡';
+  margin-right: 0.5rem;
+  color: #0073e6;
+}
+
+.about-section p:last-child {
+  font-style: italic;
+  color: #666;
+  margin-top: 2rem;
+}
+.image-section {
+  max-width: 70%;
+  
+  text-align: right;
+}
+
+.about-image {
+  width: 700px;
+  height: 100%;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}

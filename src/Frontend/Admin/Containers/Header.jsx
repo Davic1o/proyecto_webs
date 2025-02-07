@@ -2,18 +2,15 @@ import React, { useState } from 'react';
 import { FaChevronDown } from 'react-icons/fa'; // Icono de flecha
 import { useNavigate } from 'react-router-dom'; // Para redirigir
 import Swal from 'sweetalert2'; // Importación de SweetAlert
-import Input from '../../../Components/Input';
 import './Header.css';
 
 const Header = () => {
-  const [search, setSearch] = useState('');
+  
   const [menuOpen, setMenuOpen] = useState(false); // Controla la visibilidad del menú
   const navigate = useNavigate(); // Hook para navegación
 
-  const handleSearch = () => {
-    console.log('Search query:', search);
-    // Implementa la funcionalidad de búsqueda aquí
-  };
+  const userStorage=localStorage.getItem('user')
+  const user = userStorage ? JSON.parse(userStorage) : { nombre: 'Cliente' };
 
   const toggleMenu = () => {
     setMenuOpen((prev) => !prev); // Alterna el menú desplegable
@@ -42,7 +39,7 @@ const Header = () => {
 
       </div>
       <div className="bienvenido-user" onClick={toggleMenu}>
-        Bienvenido Administrador
+        Bienvenido {user.nombre}
         <FaChevronDown className="chevron-icon" />
         {menuOpen && (
           <div className="dropdown-menu">
