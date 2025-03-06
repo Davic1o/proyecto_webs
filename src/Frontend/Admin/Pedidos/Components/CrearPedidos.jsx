@@ -62,7 +62,7 @@ const CrearPedidos = ({ onCancel, pedidoToEdit, onSave,tecnicos,clientes }) => {
 
   const handleSubmit = () => {
     console.log("este es el nombre y tecnico", cliente.nombre, tecnico.nombre)
-    if (!requerimiento.trim() || !provincia.trim() || !ciudad.trim() || !direccion.trim() || !cliente.nombre.trim() || !tecnico.nombre.trim()){
+    if (!requerimiento.trim() || !provincia.trim() || !ciudad.trim() || !direccion.trim() || tecnico.nombre==null || cliente.nombre==null){
       Swal.fire({
         icon: "error",
         title: "Error",

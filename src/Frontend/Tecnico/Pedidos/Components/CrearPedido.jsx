@@ -59,7 +59,7 @@ const CrearPedido = ({ onCancel, pedidoToEdit, onSave,clientes, user}) => {
   };
 
   const handleSubmit = () => {
-    if (!requerimiento.trim() || !provincia.trim() || !ciudad.trim() || !direccion.trim() || !cliente.nombre.trim()){
+    if (!requerimiento.trim() || !provincia.trim() || !ciudad.trim() || !direccion.trim() || cliente.nombre==null){
       Swal.fire({
         icon: "error",
         title: "Error",

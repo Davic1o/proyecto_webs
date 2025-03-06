@@ -60,7 +60,7 @@ const CrearPedido = ({ onCancel, pedidoToEdit, onSave, user, tecnicos}) => {
   
   const handleSubmit = () => {
     console.log("ESte es el técnico",tecnico)
-    if (!requerimiento.trim() || !provincia.trim() || !ciudad.trim() || !direccion.trim()  || !tecnico.nombre.trim()){
+    if (!requerimiento.trim() || !provincia.trim() || !ciudad.trim() || !direccion.trim()  ||  tecnico==null){
       Swal.fire({
         icon: "error",
         title: "Error",
@@ -197,7 +197,7 @@ const CrearPedido = ({ onCancel, pedidoToEdit, onSave, user, tecnicos}) => {
              className="input-field"
              required
            >
-             <option value="">{tecnico.nombre ? tecnico.nombre : "Selecciona un tecnico"}</option>
+             <option value={tecnico._id}>{tecnico.nombre ? tecnico.nombre : "Selecciona un tecnico"}</option>
              {tecnicos.map((cli) => (
                <option key={cli._id} value={cli._id}>
                  {cli.nombre}
