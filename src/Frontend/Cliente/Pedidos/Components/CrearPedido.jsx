@@ -57,8 +57,9 @@ const CrearPedido = ({ onCancel, pedidoToEdit, onSave, user, tecnicos}) => {
     const numeroPedido = getNextPedidoNumber(ciudad).toString().padStart(8, "0");
     setPedido(`Pe-${initials}-${numeroPedido}`);
   };
-  console.log("ESte es el técnico",tecnico.nombre)
+  
   const handleSubmit = () => {
+    console.log("ESte es el técnico",tecnico)
     if (!requerimiento.trim() || !provincia.trim() || !ciudad.trim() || !direccion.trim()  || !tecnico.nombre.trim()){
       Swal.fire({
         icon: "error",
